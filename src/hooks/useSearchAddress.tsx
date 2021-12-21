@@ -1,19 +1,30 @@
 
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
+import axios from 'axios';
 import { useRouter } from "next/router";
-import { createContext, ReactNode, useCallback, useEffect, useState } from "react";
-import { useForm, UseFormRegister } from "react-hook-form";
+import { createContext, Dispatch, ReactNode, SetStateAction, useCallback, useEffect, useState } from "react";
+import { useForm, UseFormGetValues, UseFormRegister, UseFormSetValue } from "react-hook-form";
 import { schema } from "../schema/index";
 import api from "../services/api";
 import { AndressProps, FormInputs } from '../types/Forms';
+import { ICEPData } from '../types/SearchCEP';
 
 interface FormsContextData {
     onClickZipCode: (e: React.SyntheticEvent) => void;
     register: UseFormRegister<FormInputs>;
+    setSelectedState: Dispatch<SetStateAction<string>>
+    selectedCity:string
+    setSelectedCity:Dispatch<SetStateAction<string>>
+    selectedAddress:string
+    setSelectedAddress:Dispatch<SetStateAction<string>>
     //handleSubmit: UseFormHandleSubmit<FormInputs>;
     //setMessage: Dispatch<SetStateAction<string>>;
-    //setValue: UseFormSetValue<FormInputs>;
+   selectedState: string
+    setValue: UseFormSetValue<FormInputs>;
+   getValues: UseFormGetValues<FormInputs>
     findAndressRouter: () => void;
+   
+    searchCepRequest: () => Promise<void>
     buttonController: boolean;
     inputController: string;
     //handlePagination: SubmitHandler<SyntheticEvent<Element, Event>>;
@@ -43,16 +54,18 @@ export const SearchAddressProvider=({children} : SearchAddressProvideProps )=>{
   const [pagination, setPagination] = useState(true);
   const [inputController, setInputController] = useState(undefined);
   const [buttonController, setButtonController] = useState(true);
-  const [zipCode, setZipCode] = useState("");
+  const [zipCode, setZipCode] = useState('');
    const [message, setMessage] = useState("");
-
+  const [selectedCity,setSelectedCity]=useState("");
+  const [selectedState,setSelectedState]=useState("");
+  const [selectedAddress,setSelectedAddress]=useState("");
    const router= useRouter()
    const {
     register,
     setValue,
     setFocus,
     formState: { errors },
-
+    getValues,
     setError,
     handleSubmit,
     resetField,
@@ -112,7 +125,7 @@ useEffect(() => {
           setInputController(null);
         }
         if (data.cep) {
-          router.push("/responseAddress");
+          router.push("/ResponseAddress");
           setPagination(true);
           setValue("address", data.logradouro);
           setValue("district", data.bairro);
@@ -131,13 +144,52 @@ useEffect(() => {
     setValue("city", "");
     setValue("state", "");
     setValue("code", "");
-    router.push("/searchAddress");
+    router.push("/SearchAddress");
     setPagination(false);
     setButtonController(true);
   }
+  
+  const searchCepRequest=async()=>{
+
+    console.log(selectedState)
+    try{
+    const response=await axios.get<ICEPData[]>(
+      `
+      https://viacep.com.br/ws/${selectedState}/${selectedCity}/${selectedAddress.replace(
+          /\s+/g,
+          "+"
+        )}/json/
+      `
+    ) 
+    let data = response.data.map((item) => {
+        return item;
+      });
+       if(!data){
+        setMessage("Cep não encontrado")
+       }
+         alert(`Estado:${selectedState}
+      Cidade:${selectedCity}
+      Bairro:${selectedAddress}
+      `)
+    } 
+  catch(err){
+    console.log(err)
+  }
+
+  
+
+
+  
+  }
+  
   return(
     <SearchContext.Provider 
     value={{
+      setSelectedState,
+      selectedState,
+      setValue,
+      getValues,
+      searchCepRequest,
       inputController,
       handleKeyUp,
       handleOnChangeUser,
@@ -145,7 +197,12 @@ useEffect(() => {
       buttonController,
       register,
       findAndressRouter,
-      message
+      message,
+      selectedCity,
+      setSelectedCity,
+      selectedAddress,
+      setSelectedAddress
+    
     }}
     > 
     {children}  </SearchContext.Provider>

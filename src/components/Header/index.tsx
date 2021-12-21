@@ -6,13 +6,13 @@ export function Header() {
     <S.HeaderContainer>
       <div className="headerContent">
         <ActiveLink href="/" activeClassName="active">
-          <h1>BuscadorCep</h1>
+          <h1>BuscadorCep!</h1>
         </ActiveLink>
         <nav>
-          <ActiveLink activeClassName="active" href="/searchAddress">
+          <ActiveLink activeClassName="active" href="/SearchAddress">
             <a>Buscar Endereço</a>
           </ActiveLink>
-          <ActiveLink activeClassName="active" href="/searchCep">
+          <ActiveLink activeClassName="active" href="/SearchCep">
             <a>Buscar Cep</a>
           </ActiveLink>
         </nav>

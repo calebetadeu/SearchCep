@@ -1,7 +1,9 @@
 import styled from "styled-components";
 
 export const HeaderContainer=styled.header `  
-
+@media print{
+  display: none;
+}
 margin-top: 3rem;
   height: 5rem;
   border-bottom: 1px solid white;

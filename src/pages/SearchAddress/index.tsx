@@ -1,11 +1,11 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useContext } from 'react';
-import Button from "../components/Button";
-import { Input } from "../components/input";
-import { SearchContext } from "../hooks/useSearchAddress";
+import Button from "../../components/Button";
+import { Input } from "../../components/input";
+import { SearchContext } from "../../hooks/useSearchAddress";
 //import { FormsContext } from "../hooks/UseFormProvider";
-import * as S from "../styles/Pages/SearchAddress";
+import * as S from "./styles";
 
 
 export default function SearchAndress() {
@@ -49,12 +49,12 @@ export default function SearchAndress() {
       
         <span>{message}</span>
       
-      <section className="groupButtons">
+      <S.ButtonContainer>
         <Button  onClick={homeRouter} >Voltar</Button>
         <Button onClick={onClickZipCode} disabled={buttonController}>
           Buscar
         </Button>
-      </section>
+      </S.ButtonContainer>
     </S.Container>
   );
 }

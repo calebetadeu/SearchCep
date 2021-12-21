@@ -1,12 +1,19 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
-export const ButtonContainer = styled.div` 
+interface IButtonProps {
+  variant: "primary" | "secondary";
+  disabled?: boolean;
+}
+export const ButtonContainer = styled.div `
  
   display: flex;
 
   padding: 0 20px;
 
-  button {
+
+   
+`
+export const Button =styled.button <IButtonProps>`  
     width: 180px;
     height: 4rem;
     border: 0;
@@ -25,8 +32,5 @@ export const ButtonContainer = styled.div`
     &:hover {
       filter: brightness(0.8);
     }
-  }
-
-
 
 `
