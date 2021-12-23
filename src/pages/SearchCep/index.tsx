@@ -13,7 +13,7 @@ import * as S from "../../styles/Pages/SearchAddress";
      state:string  
  }
  
-export default function FindCep({city}) {
+export default function FindCep() {
   const router = useRouter();
   const {register,message,searchCepRequest,setSelectedAddress,selectedAddress   }=useContext(SearchContext);
     const [formVlaues,setFormValues]=useState<FindCepProps>()
