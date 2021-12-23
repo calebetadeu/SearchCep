@@ -13,7 +13,7 @@ yarn dev
 
 ## Para Rodar os Tests
 ```bash
-yarn start
+yarn test
 ```
 
 
