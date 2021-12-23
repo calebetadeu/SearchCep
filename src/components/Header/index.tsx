@@ -1,13 +1,14 @@
 import { ActiveLink } from "../ActiveLink";
+import Title from "../Title";
 import * as S from './styles';
 
 export function Header() {
   return (
     <S.HeaderContainer>
       <div className="headerContent">
-        <ActiveLink href="/" activeClassName="active">
-          <h1>BuscadorCep!</h1>
-        </ActiveLink>
+
+          <Title/>
+      
         <nav>
           <ActiveLink activeClassName="active" href="/SearchAddress">
             <a>Buscar Endereço</a>

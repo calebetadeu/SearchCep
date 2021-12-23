@@ -17,8 +17,7 @@ interface FormsContextData {
     setSelectedCity:Dispatch<SetStateAction<string>>
     selectedAddress:string
     setSelectedAddress:Dispatch<SetStateAction<string>>
-    //handleSubmit: UseFormHandleSubmit<FormInputs>;
-    //setMessage: Dispatch<SetStateAction<string>>;
+  
    selectedState: string
     setValue: UseFormSetValue<FormInputs>;
    getValues: UseFormGetValues<FormInputs>
@@ -27,19 +26,11 @@ interface FormsContextData {
     searchCepRequest: () => Promise<void>
     buttonController: boolean;
     inputController: string;
-    //handlePagination: SubmitHandler<SyntheticEvent<Element, Event>>;
+
     handleKeyUp: (e: React.FormEvent<HTMLInputElement>) => void;
    handleOnChangeUser: (e: React.SyntheticEvent) => void;
     message: string;
-    /*errors: {
-      name?: FieldError;
-      cep?: FieldError;
-      andress?: FieldError;
-      andressNumber?: FieldError;
-      neighborhood?: FieldError;
-      city?: FieldError;
-      uf?: FieldError;
-    };**/
+
   }
   type SearchAddressProvideProps = {
     children: ReactNode;
